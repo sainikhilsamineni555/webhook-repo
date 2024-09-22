@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repo Changes</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .change { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Latest Repository Changes</h1>
+    <div id="changes"></div>
+
+    <script>
+        async function fetchChanges() {
+            try {
+                const response = await fetch('/latest_changes');
+                const changes = await response.json();
+                displayChanges(changes);
+            } catch (error) {
+                console.error('Error fetching changes:', error);
+            }
+        }
+
+        function displayChanges(changes) {
+            const changesDiv = document.getElementById('changes');
+            changesDiv.innerHTML = ''; 
+            
+            changes.forEach(change => {
+                const changeElement = document.createElement('div');
+                changeElement.className = 'change';
+                changeElement.textContent = change;
+                changesDiv.appendChild(changeElement);
+            });
+        }
+        setInterval(fetchChanges, 15000);
+        fetchChanges();
+    </script>
+</body>
+</html>
